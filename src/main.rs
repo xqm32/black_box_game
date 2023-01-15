@@ -38,7 +38,7 @@ impl BlackBox {
 
     fn get(&self, row: usize, col: usize) -> &Grid {
         // TODO: 添加越界检查
-        &self.grid[row * self.rows + col]
+        &self.grid[row * self.cols + col]
     }
 }
 
