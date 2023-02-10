@@ -1,6 +1,7 @@
-use std::{fmt::Display, io};
+use std::{fmt::Display, io, process::exit};
 
 use rand::{rngs::ThreadRng, seq::index::sample, thread_rng};
+use regex::Regex;
 
 #[derive(Debug, Clone)]
 enum Grid {
@@ -139,9 +140,15 @@ fn main() {
     let mut black_box = BlackBox::new(16, 16, 16);
     println!("{}", black_box);
 
+    let quit = Regex::new(r"^(quit|q)$").unwrap();
     loop {
         let mut buf = String::new();
         io::stdin().read_line(&mut buf).expect("Error");
+
+        if quit.is_match(buf.trim()) {
+            println!("Quit");
+            exit(0)
+        }
 
         let (dir, loc) = match buf.split_once(" ") {
             Some((dir, loc)) => (dir, loc),
