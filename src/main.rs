@@ -85,30 +85,28 @@ impl BlackBox {
             }
 
             let mut forward_balls = 0;
-            let mut d = (drow, dcol);
             if drow != 0 {
                 if let Grid::Ball = self.get(row + drow, col + drow).unwrap_or(&Grid::Empty) {
                     forward_balls += 1;
-                    d = (dcol, -drow);
+                    (drow, dcol) = (dcol, -drow);
                 }
                 if let Grid::Ball = self.get(row + drow, col - drow).unwrap_or(&Grid::Empty) {
                     forward_balls += 1;
-                    d = (dcol, drow)
+                    (drow, dcol) = (dcol, drow)
                 }
             } else if dcol != 0 {
                 if let Grid::Ball = self.get(row + dcol, col + dcol).unwrap_or(&Grid::Empty) {
                     forward_balls += 1;
-                    d = (-dcol, drow);
+                    (drow, dcol) = (-dcol, drow);
                 }
                 if let Grid::Ball = self.get(row - dcol, col + dcol).unwrap_or(&Grid::Empty) {
                     forward_balls += 1;
-                    d = (dcol, drow)
+                    (drow, dcol) = (dcol, drow)
                 }
             }
             if forward_balls == 2 {
                 return format!("Reflection");
             }
-            (drow, dcol) = d;
 
             row += drow;
             col += dcol;
